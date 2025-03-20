@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
+import {config} from "./src/config.js"
+
+mongoose.connect(config.db.URI)
 
 
-const URI = "mongodb://localhost:27017/ferreteriaEPA";
-
-
-mongoose.connect(URI);
-
+//const URI = "";
 const connection = mongoose.connection;
 
 connection.once("open", ()=> {
