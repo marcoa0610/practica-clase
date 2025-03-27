@@ -4,7 +4,7 @@ const router = express.Router();
 import employeesController from "../controllers/employeesController.js";
 
 router.route("/")
-.get(employeesController.getEmployees)
+.get(employeesController.getEmployee)
 .post(employeesController.createEmployees)
 
 router.route("/:id")

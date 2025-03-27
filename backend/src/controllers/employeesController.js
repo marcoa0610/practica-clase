@@ -5,7 +5,7 @@ const employeesController = {};
 import employeesModel from "../models/Employees.js";
 
 // SELECT
-employeesController.getEmployees = async (req, res) => {
+employeesController.getEmployee = async (req, res) => {
     const employees = await employeesModel.find();
     res.json(employees)
 }
