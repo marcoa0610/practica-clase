@@ -1,34 +1,36 @@
 import nodemailer from "nodemailer";
-import {config} from "../config.js";
- 
+import { config } from "../config.js";
+
+// Crear el transportador de nodemailer con la configuración SMTP de Gmail
 const transporter = nodemailer.createTransport({
-    host: "smpt.gmail.com",
-    port: 465,
-    secure: true,
+    host: "smtp.gmail.com",
+    port: 465, // O puedes usar 587 si encuentras problemas con el 465
+    secure: true, // Usa SSL/TLS para la conexión
     auth: {
-        user: config.emailUser.email_user,
-        pass: config.emailUser.email_password
+        user: config.emailUser.user_email, // Asegúrate de que estas credenciales sean correctas
+        pass: config.emailUser.user_pass // Asegúrate de que la contraseña sea correcta
     }
 });
- 
-const sendEmail = async (to, subject, text) => {
+
+// Función para enviar el correo
+const sendEmail = async (to, subject, text, code) => {
     try {
         const info = await transporter.sendMail({
-            from: '"Soporte EPA <diegojim007@gmail.com>' ,
-            to,
-            subject,
-            text,
-            html
- 
-        })
-           
- return info;
-    } catch(error) {
- 
+            from: '"Soporte EPA <la.galletapez@gmail.com>', // Dirección del remitente
+            to, // Dirección del destinatario
+            subject, // Asunto del correo
+            text, // Texto sin formato del correo
+            html: HTMLRecoveryEmail(code) // El contenido HTML del correo (lo generamos con la función HTMLRecoveryEmail)
+        });
+        
+        console.log("Email sent successfully:", info);
+        return info;
+    } catch (error) {
+        console.error("Error sending email:", error); // Registra cualquier error
     }
-   
 };
- 
+
+// Función para generar el contenido HTML del correo de recuperación de contraseña
 const HTMLRecoveryEmail = (code) => {
     return `
       <div style="font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f9; padding: 20px; border: 1px solid #ddd; border-radius: 10px; max-width: 600px; margin: 0 auto;">
@@ -49,6 +51,7 @@ const HTMLRecoveryEmail = (code) => {
         </footer>
       </div>
     `;
-  };
+};
 
-  export {sendEmail, HTMLRecoveryEmail};            
+// Exportar las funciones para que puedan ser usadas en otros archivos
+export { sendEmail, HTMLRecoveryEmail };

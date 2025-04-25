@@ -4,7 +4,7 @@ import recoveryPasswordController from "../controllers/recoveryPasswordControlle
 const router = express.Router();
 
 router.route("/requestCode").post(recoveryPasswordController.requestCode);
-//router.router("/verifyCode").post();
+router.route("/verifyCode").post(recoveryPasswordController.verifyCode);
 //router.router("/newPassword").post();
 
 
