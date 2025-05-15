@@ -23,5 +23,10 @@ export const config ={
     emailUser:{
         user_email: process.env.USER_EMAIL,
         user_pass: process.env.USER_PASS
+    },
+    cloudinary: {
+        cloud_name: process.env.CLOUD_NAME,
+        cloudinary_api_key: process.env.COUDINARY_API_KEY,
+        cloudinary_api_secret: process.env.COUDINARY_API_SECRET
     }
 };

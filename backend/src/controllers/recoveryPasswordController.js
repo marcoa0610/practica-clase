@@ -123,7 +123,7 @@ try {
     //Extraer el email y el userType
     const {email, userType} = decoded;
 
-    const hashedPassword = await .hash(newPassword, 10);
+    const hashedPassword = await hash(newPassword, 10);
 
     let updateUser 
 
