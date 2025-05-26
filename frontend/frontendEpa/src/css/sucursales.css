@@ -1,0 +1,36 @@
+/* ===== GRID LAYOUT PARA SUCURSALES ===== */
+.sucursales-container {
+    width: 100%;
+  }
+  
+  .sucursales-header {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .sucursales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+  }
+  
+  /* ===== RESPONSIVE PARA EL GRID ===== */
+  @media (max-width: 1200px) {
+    .sucursales-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .sucursales-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .sucursales-header {
+      margin-bottom: 1rem;
+    }
+  }

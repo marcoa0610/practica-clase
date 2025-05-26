@@ -19,6 +19,16 @@ import brandsRoutes from "./src/routes/brands.js"
 //Creo una const que es igual a la libreria "express"
 //acabo de importar y lo ejecuto
 const app = express();
+import cors from "cors"
+ 
+ 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    // Permitir envío de cookies y credenciales
+    credentials: true
+  })
+);
 // middleware para aceptar datos desde postman
 app.use(express.json());
 app.use(cookieParser());

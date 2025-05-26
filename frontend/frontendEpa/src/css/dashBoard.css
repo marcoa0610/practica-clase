@@ -1,0 +1,286 @@
+/* dashBoard.css */
+
+/* Reset y configuración base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background-color: #f8fafc;
+    color: #1f2937;
+  }
+  
+  /* Contenedor principal del dashboard */
+  .dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #f8fafc;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    flex-shrink: 0;
+    background-color: #ffffff;
+  }
+  
+  /* Contenido principal */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #f8fafc;
+    overflow-x: hidden;
+  }
+  
+  /* Títulos */
+  .content-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  
+  .content-subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #6b7280;
+    margin-bottom: 2rem;
+  }
+  
+  /* Grid de tarjetas */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  /* Tarjetas */
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-color: #fbbf24;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+  
+  /* Wrapper para contenido de otras secciones */
+  .content-wrapper {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+    margin-top: 1rem;
+    min-height: 400px;
+    width: 100%;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .main-content {
+      padding: 1.5rem;
+    }
+    
+    .content-title {
+      font-size: 2rem;
+    }
+    
+    .cards-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-container {
+      flex-direction: column;
+    }
+    
+    .main-content {
+      padding: 1rem;
+      min-height: calc(100vh - 60px);
+    }
+    
+    .content-title {
+      font-size: 1.75rem;
+    }
+    
+    .content-subtitle {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .cards-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .card {
+      padding: 1.5rem;
+      min-height: 150px;
+    }
+    
+    .card-title {
+      font-size: 1.25rem;
+    }
+    
+    .content-wrapper {
+      padding: 1.5rem;
+      min-height: 300px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .main-content {
+      padding: 0.75rem;
+    }
+    
+    .content-title {
+      font-size: 1.5rem;
+    }
+    
+    .content-subtitle {
+      font-size: 1.125rem;
+    }
+    
+    .card {
+      padding: 1.25rem;
+      min-height: 120px;
+    }
+    
+    .card-title {
+      font-size: 1.125rem;
+    }
+    
+    .card-text {
+      font-size: 0.875rem;
+    }
+    
+    .content-wrapper {
+      padding: 1.25rem;
+      min-height: 250px;
+    }
+  }
+  
+  /* Mejoras adicionales para el dashboard */
+  .dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stat-card {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-label {
+    font-size: 0.875rem;
+    opacity: 0.9;
+  }
+  
+  /* Animaciones suaves */
+  .card, .content-wrapper, .stat-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  
+  /* Estados de carga y vacío */
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    color: #6b7280;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #6b7280;
+  }
+  
+  .empty-state h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #374151;
+  }
+  
+  /* Utilidades */
+  .text-center {
+    text-align: center;
+  }
+  
+  .text-left {
+    text-align: left;
+  }
+  
+  .text-right {
+    text-align: right;
+  }
+  
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+  
+  .mb-6 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+  
+  .mt-4 {
+    margin-top: 1rem;
+  }
+  
+  .mt-6 {
+    margin-top: 1.5rem;
+  }
