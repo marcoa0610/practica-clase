@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './pages/loginPage';
-import DashboardPage from './pages/dashboardPage';
-import SucursalesPage from './pages/sucursalesPage';
+import LoginPage from '../src/pages/loginPage';
+import DashboardPage from '../src/pages/dashboardPage';
+import SucursalesPage from '../src/pages/sucursalesPage';
+import SidebarComponent from '../src/components/sideBarComponent';
+import ProductosPage from './pages/productsPage';
+import EmpleadosPage from './pages/empleadosPage';
 // Importa las otras páginas cuando las tengas
 // import MarcasPage from './pages/marcasPage';
 // import ProductosPage from './pages/productosPage';
@@ -115,39 +118,22 @@ const App = () => {
 
         {/* Ruta de sucursales - solo para admin */}
         <Route 
-          path="/sucursales" 
-          element={
-            <ProtectedRoute allowedUserTypes={['admin']}>
-              <SucursalesPage onLogout={handleLogout} />
-            </ProtectedRoute>
-          } 
-        />
+  path="/sucursales" 
+  element={<SucursalesPage onLogout={handleLogout} />} 
+/>
+
 
         {/* Ruta de marcas - solo para admin */}
         <Route 
-          path="/marcas" 
-          element={
-            <ProtectedRoute allowedUserTypes={['admin']}>
-              <div className="flex">
-                {/* Aquí pondrás tu MarcasPage cuando la tengas */}
-                <div>Página de Marcas - En construcción</div>
-              </div>
-            </ProtectedRoute>
-          } 
-        />
+  path="/empleados" 
+  element={<EmpleadosPage onLogout={handleLogout} />} 
+/>
 
         {/* Ruta de productos - solo para admin */}
         <Route 
-          path="/productos" 
-          element={
-            <ProtectedRoute allowedUserTypes={['admin']}>
-              <div className="flex">
-                {/* Aquí pondrás tu ProductosPage cuando la tengas */}
-                <div>Página de Productos - En construcción</div>
-              </div>
-            </ProtectedRoute>
-          } 
-        />
+  path="/productos" 
+  element={<ProductosPage onLogout={handleLogout} />} 
+/>
 
         {/* Ruta no autorizada */}
         <Route 

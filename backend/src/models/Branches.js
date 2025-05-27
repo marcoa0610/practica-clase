@@ -6,33 +6,40 @@
     schedule
 */
 
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-const branchesSchema = new Schema(
-    {
-
-        name: {
-            type: String,
-            require: true
-        },
-        adress: {
-            type: String,
-            require: true
-        },
-        telephone: {
-            type: String,
-            require: true,
-        },
-        schedule:{
-            type: String,
-            require: true,
-        }
+const branchSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, 'El nombre de la sucursal es requerido'],
+        trim: true,
+        maxlength: [100, 'El nombre no puede exceder 100 caracteres']
     },
-    {
-        timestamps: true,
-        strict: false
+    telephone: {
+        type: String,
+        required: [true, 'El teléfono es requerido'],
+        trim: true,
+        maxlength: [20, 'El teléfono no puede exceder 20 caracteres']
+    },
+    address: {
+        type: String,
+        required: [true, 'La dirección es requerida'],
+        trim: true,
+        maxlength: [500, 'La dirección no puede exceder 500 caracteres']
+    },
+    schedule: {
+        type: String,
+        required: [true, 'El horario es requerido'],
+        trim: true,
+        maxlength: [100, 'El horario no puede exceder 100 caracteres']
     }
-    
-);
+}, {
+    timestamps: true // Esto agrega createdAt y updatedAt automáticamente
+});
 
-export default model("Branch", branchesSchema)
+// Índices para mejorar performance en búsquedas
+branchSchema.index({ name: 1 });
+
+const branchesModel = mongoose.model('Branch', branchSchema);
+
+export default branchesModel;

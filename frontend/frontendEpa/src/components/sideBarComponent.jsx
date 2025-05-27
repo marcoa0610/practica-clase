@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Home, MapPin, Tag, Package, LogOut } from 'lucide-react';
 import '../css/sidebar.css';
 
-const SidebarComponent = ({ onLogout }) => {
+const SidebarComponent = ({ activeSection, setActiveSection, onLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,10 +21,10 @@ const SidebarComponent = ({ onLogout }) => {
       path: '/sucursales'
     },
     {
-      id: 'marcas',
-      label: 'Marcas',
+      id: 'empleados',
+      label: 'Empleados',
       icon: Tag,
-      path: '/marcas'
+      path: '/empleados'
     },
     {
       id: 'productos',
@@ -34,12 +34,22 @@ const SidebarComponent = ({ onLogout }) => {
     }
   ];
 
-  const handleNavigation = (path) => {
-    navigate(path);
+  const handleNavigation = (itemId, path) => {
+    // Solo usar navegación interna si estás en /dashboard y haciendo clic en secciones internas
+    if (location.pathname === '/dashboard' && setActiveSection && itemId === 'dashboard') {
+      setActiveSection(itemId);
+    } else {
+      navigate(path);
+    }
   };
 
   // Función para determinar si una ruta está activa
-  const isActive = (path) => {
+  const isActive = (itemId, path) => {
+    // Si estás en el dashboard y tienes activeSection, usar navegación interna
+    if (location.pathname === '/dashboard' && activeSection) {
+      return activeSection === itemId;
+    }
+    // Para todas las demás páginas, comparar con la ruta actual
     return location.pathname === path;
   };
 
@@ -73,8 +83,8 @@ const SidebarComponent = ({ onLogout }) => {
           return (
             <button
               key={item.id}
-              onClick={() => handleNavigation(item.path)}
-              className={`menu-item ${isActive(item.path) ? 'active' : ''}`}
+              onClick={() => handleNavigation(item.id, item.path)}
+              className={`menu-item ${isActive(item.id, item.path) ? 'active' : ''}`}
             >
               <Icon className="menu-icon" />
               <span className="menu-text">{item.label}</span>

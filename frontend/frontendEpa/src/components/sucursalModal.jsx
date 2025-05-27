@@ -1,189 +1,170 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
-import '../css/sucursalModal.css';
+import '../css/modal.css'; 
 
-const SucursalModal = ({ sucursal, onSave, onClose }) => {
+const SucursalModal = ({ isOpen, onClose, onSave, sucursal = null, mode = 'add' }) => {
   const [formData, setFormData] = useState({
-    nombre: '',
-    telefono: '',
-    direccion: '',
-    horario: ''
+    name: '',
+    telephone: '',
+    address: '',
+    schedule: ''
   });
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
+  // Resetear formulario cuando se abre/cierra el modal o cambia la sucursal
   useEffect(() => {
-    if (sucursal) {
-      setFormData({
-        nombre: sucursal.nombre || '',
-        telefono: sucursal.telefono || '',
-        direccion: sucursal.direccion || '',
-        horario: sucursal.horario || ''
-      });
+    if (isOpen) {
+      if (mode === 'edit' && sucursal) {
+        setFormData({
+          name: sucursal.name || '',
+          telephone: sucursal.telephone || '',
+          address: sucursal.address || '',
+          schedule: sucursal.schedule || ''
+        });
+      } else {
+        setFormData({
+          name: '',
+          telephone: '',
+          address: '',
+          schedule: ''
+        });
+      }
+      setError('');
     }
-  }, [sucursal]);
+  }, [isOpen, sucursal, mode]);
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.nombre.trim()) {
-      newErrors.nombre = 'El nombre es requerido';
-    }
-
-    if (!formData.telefono.trim()) {
-      newErrors.telefono = 'El teléfono es requerido';
-    } else if (!/^\d{4}-\d{4}$/.test(formData.telefono)) {
-      newErrors.telefono = 'Formato de teléfono inválido (ej: 1234-5678)';
-    }
-
-    if (!formData.direccion.trim()) {
-      newErrors.direccion = 'La dirección es requerida';
-    }
-
-    if (!formData.horario.trim()) {
-      newErrors.horario = 'El horario es requerido';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-
-    // Limpiar error del campo cuando el usuario empiece a escribir
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!validateForm()) {
+    // Validación básica
+    if (!formData.name.trim() || !formData.telephone.trim() || !formData.address.trim() || !formData.schedule.trim()) {
+      setError('Todos los campos son requeridos');
       return;
     }
 
-    setIsSubmitting(true);
+    setLoading(true);
+    setError('');
+
     try {
       await onSave(formData);
+      onClose();
     } catch (error) {
-      console.error('Error al guardar:', error);
+      setError(error.message || 'Error al guardar la sucursal');
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
-  const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
+  const handleClose = () => {
+    if (!loading) {
       onClose();
     }
   };
 
+  if (!isOpen) return null;
+
   return (
-    <div className="modal-backdrop" onClick={handleBackdropClick}>
-      <div className="modal-container">
+    <div className="modal-overlay" onClick={handleClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2 className="modal-title">
-            {sucursal ? 'Editar Sucursal' : 'Agregar Sucursal'}
+            {mode === 'edit' ? 'Editar Sucursal' : 'Agregar Sucursal'}
           </h2>
           <button 
-            className="close-btn"
-            onClick={onClose}
-            type="button"
+            className="modal-close-btn" 
+            onClick={handleClose}
+            disabled={loading}
           >
-            <X size={20} />
+            ×
           </button>
         </div>
-
+        
         <form onSubmit={handleSubmit} className="modal-form">
-          <div className="form-group">
-            <label htmlFor="nombre" className="form-label">
-              Nombre de la Sucursal *
-            </label>
-            <input
-              type="text"
-              id="nombre"
-              name="nombre"
-              value={formData.nombre}
-              onChange={handleInputChange}
-              className={`form-input ${errors.nombre ? 'error' : ''}`}
-              placeholder="Ingrese el nombre de la sucursal"
-            />
-            {errors.nombre && <span className="error-message">{errors.nombre}</span>}
+          {error && (
+            <div className="error-message">
+              {error}
+            </div>
+          )}
+          
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="name">Nombre</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                disabled={loading}
+                placeholder="Nombre de la sucursal"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="telephone">Teléfono</label>
+              <input
+                type="text"
+                id="telephone"
+                name="telephone"
+                value={formData.telephone}
+                onChange={handleChange}
+                disabled={loading}
+                placeholder="Número de teléfono"
+              />
+            </div>
           </div>
-
-          <div className="form-group">
-            <label htmlFor="telefono" className="form-label">
-              Teléfono *
-            </label>
-            <input
-              type="text"
-              id="telefono"
-              name="telefono"
-              value={formData.telefono}
-              onChange={handleInputChange}
-              className={`form-input ${errors.telefono ? 'error' : ''}`}
-              placeholder="1234-5678"
-              maxLength="9"
-            />
-            {errors.telefono && <span className="error-message">{errors.telefono}</span>}
+          
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="address">Dirección</label>
+              <textarea
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                disabled={loading}
+                placeholder="Dirección completa"
+                rows="3"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="schedule">Horario</label>
+              <input
+                type="text"
+                id="schedule"
+                name="schedule"
+                value={formData.schedule}
+                onChange={handleChange}
+                disabled={loading}
+                placeholder="Ej: 8:00 AM - 9:00 PM"
+              />
+            </div>
           </div>
-
-          <div className="form-group">
-            <label htmlFor="direccion" className="form-label">
-              Dirección *
-            </label>
-            <textarea
-              id="direccion"
-              name="direccion"
-              value={formData.direccion}
-              onChange={handleInputChange}
-              className={`form-textarea ${errors.direccion ? 'error' : ''}`}
-              placeholder="Ingrese la dirección completa"
-              rows="3"
-            />
-            {errors.direccion && <span className="error-message">{errors.direccion}</span>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="horario" className="form-label">
-              Horario *
-            </label>
-            <input
-              type="text"
-              id="horario"
-              name="horario"
-              value={formData.horario}
-              onChange={handleInputChange}
-              className={`form-input ${errors.horario ? 'error' : ''}`}
-              placeholder="8:00 AM - 9 PM"
-            />
-            {errors.horario && <span className="error-message">{errors.horario}</span>}
-          </div>
-
-          <div className="modal-actions">
+          
+          <div className="form-actions">
             <button 
               type="button" 
-              className="cancel-btn"
-              onClick={onClose}
-              disabled={isSubmitting}
+              className="btn-cancel" 
+              onClick={handleClose}
+              disabled={loading}
             >
               Cancelar
             </button>
             <button 
               type="submit" 
-              className="save-btn"
-              disabled={isSubmitting}
+              className="btn-save"
+              disabled={loading}
             >
-              {isSubmitting ? 'Guardando...' : 'Guardar'}
+              {loading ? 'Guardando...' : (mode === 'edit' ? 'Actualizar' : 'Agregar')}
             </button>
           </div>
         </form>

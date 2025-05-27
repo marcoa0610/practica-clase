@@ -1,15 +1,22 @@
 import express from "express";
+import branchesController from "../controllers/branchesController.js"; // ✔
+
 
 const router = express.Router();
-import branchesController from "../controllers/branchesController.js";
 
-router.route("/")
-.get(branchesController.getBranch)
-.post(branchesController.createBranch)
+// GET all branches
+router.get("/", branchesController.getBranches);
 
-router.route("/:id")
-.get(branchesController.getBranch)
-.put(branchesController.updateBranch)
-.delete(branchesController.deleteBranch)
+// GET one branch by ID
+router.get("/:id", branchesController.getBranchById);
 
-export default router;  
+// POST create new branch
+router.post("/", branchesController.createBranch);
+
+// PUT update branch
+router.put("/:id", branchesController.updateBranch);
+
+// DELETE branch
+router.delete("/:id", branchesController.deleteBranch);
+
+export default router;

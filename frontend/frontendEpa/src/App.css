@@ -40,3 +40,9 @@
 .read-the-docs {
   color: #888;
 }
+.dashboard-layout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh; /* Asegura que ocupe toda la altura */
+}
+

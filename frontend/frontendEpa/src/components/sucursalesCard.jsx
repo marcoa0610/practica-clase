@@ -1,42 +1,50 @@
 import React from 'react';
-import '../css/sucursalCard.css';
+import '../css/sucursalesCard.css';
 
 const SucursalCard = ({ sucursal, onEdit, onDelete }) => {
+  const handleEdit = () => {
+    onEdit(sucursal);
+  };
+
+  const handleDelete = () => {
+    onDelete(sucursal._id);
+  };
+
   return (
     <div className="sucursal-card">
       <div className="sucursal-card-header">
-        <h3 className="sucursal-name">{sucursal.nombre}</h3>
+        <h3 className="sucursal-name">{sucursal.name}</h3>
       </div>
       
       <div className="sucursal-card-body">
         <div className="sucursal-info">
-          <div className="info-row">
+          <div className="info-item">
             <span className="info-label">Teléfono:</span>
-            <span className="info-value">{sucursal.telefono}</span>
+            <span className="info-value">{sucursal.telephone}</span>
           </div>
           
-          <div className="info-row">
+          <div className="info-item">
             <span className="info-label">Dirección:</span>
-            <span className="info-value">{sucursal.direccion}</span>
+            <span className="info-value">{sucursal.address}</span>
           </div>
           
-          <div className="info-row">
+          <div className="info-item">
             <span className="info-label">Horario:</span>
-            <span className="info-value">{sucursal.horario}</span>
+            <span className="info-value">{sucursal.schedule}</span>
           </div>
         </div>
       </div>
       
-      <div className="sucursal-card-actions">
+      <div className="sucursal-card-footer">
         <button 
-          className="edit-btn"
-          onClick={() => onEdit(sucursal)}
+          className="btn-edit"
+          onClick={handleEdit}
         >
           Editar
         </button>
         <button 
-          className="delete-btn"
-          onClick={() => onDelete(sucursal._id)}
+          className="btn-delete"
+          onClick={handleDelete}
         >
           Eliminar
         </button>

@@ -4,43 +4,80 @@
 const branchesController = {};
 import branchesModel from "../models/Branches.js";
 
-// SELECT
-branchesController.getBranch = async (req, res) => {
-    const branches = await branchesModel.find();
-    res.json(branches)
+// SELECT ALL
+branchesController.getBranches = async (req, res) => {
+    try {
+      const branches = await branchesModel.find();
+      console.log("Branches encontrados:", branches);
+      if (!Array.isArray(branches)) {
+        return res.status(500).json({ message: "branches no es un array", data: branches });
+      }
+      res.json(branches);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
 }
 
-//INSERT 
+// SELECT ONE BY ID
+branchesController.getBranchById = async (req, res) => {
+    try {
+        const branch = await branchesModel.findById(req.params.id);
+        if (!branch) {
+            return res.status(404).json({ message: "Branch not found" });
+        }
+        res.json(branch);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+// INSERT 
 branchesController.createBranch = async (req, res) => {
-    const {name, address, telephone, schedule} = req.body;
-
-    const newBranch = new branchesModel({name, address, telephone, schedule})
-
-    await newBranch.save();
-    res.json({message: "Branch saved"});
+    try {
+        const { name, address, telephone, schedule } = req.body;
+        
+        const newBranch = new branchesModel({ name, address, telephone, schedule });
+        await newBranch.save();
+        
+        res.status(201).json({ message: "Branch saved", branch: newBranch });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 }
 
-//DELETE
-branchesController.deleteBranch = async(req, res) => {
-    const deleteBranch = await branchesModel.findByIdAndDelete (req.params.id);
-    res.json({message: "Branch Deleted"})
+// UPDATE
+branchesController.updateBranch = async (req, res) => {
+    try {
+        const { name, address, telephone, schedule } = req.body;
+        const updatedBranch = await branchesModel.findByIdAndUpdate(
+            req.params.id,
+            { name, address, telephone, schedule }, 
+            { new: true }
+        );
+        
+        if (!updatedBranch) {
+            return res.status(404).json({ message: "Branch not found" });
+        }
+        
+        res.json({ message: "Branch Updated", branch: updatedBranch });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 }
 
-//UPDATE
-branchesController.updateBranch = async(req, res) => {
-    const {name, address, telephone, schedule} = req.body;
-    const updateBranch = await branchesModel.findByIDAndUpdate(req.params.id,
-        {name, address, telephone, schedule}, {new: true}
-    );
-
-    res.json ({message: "Branch Updated"})
-
+// DELETE
+branchesController.deleteBranch = async (req, res) => {
+    try {
+        const deletedBranch = await branchesModel.findByIdAndDelete(req.params.id);
+        
+        if (!deletedBranch) {
+            return res.status(404).json({ message: "Branch not found" });
+        }
+        
+        res.json({ message: "Branch Deleted" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
-//SELECT 1 PRODUCT BY ID
-branchesController.getBranch = async (req, res) => {
-    const branches = await branchesModel.findById(req.params.id);
-    res.json(branches);
-}
-
-export default branchesController; 
+export default branchesController;
