@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SidebarComponent from '../components/sideBarComponent';
 import SucursalCard from '../components/sucursalesCard';
-import SucursalModal from '../components/SucursalModal';
+import SucursalModal from '../components/sucursalModal';
 import '../css/dashBoard.css';
 import '../css/sucursales.css';
 import '../css/modal.css';
