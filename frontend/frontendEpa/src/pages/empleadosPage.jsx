@@ -22,7 +22,7 @@ const EmpleadosPage = ({ onLogout }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('http://localhost:4000/api/employee', {
+      const response = await fetch('https://practica-clase.onrender.com/api/employee', {
         method: 'GET',
         credentials: 'include',
       });
@@ -56,7 +56,7 @@ const EmpleadosPage = ({ onLogout }) => {
     if (!window.confirm('¿Estás seguro de que deseas eliminar este empleado?')) return;
 
     try {
-      const response = await fetch(`http://localhost:4000/api/employee/${empleadoId}`, {
+      const response = await fetch(`https://practica-clase.onrender.com/api/employee/${empleadoId}`, {
         method: 'DELETE',
         credentials: 'include',
       });
@@ -77,8 +77,8 @@ const EmpleadosPage = ({ onLogout }) => {
   const handleSaveEmpleado = async (formData) => {
     try {
       const url = modalMode === 'add'
-        ? 'http://localhost:4000/api/employee'
-        : `http://localhost:4000/api/employee/${currentEmpleado._id}`;
+        ? 'https://practica-clase.onrender.com/api/employee'
+        : `https://practica-clase.onrender.com/api/employee/${currentEmpleado._id}`;
 
       const method = modalMode === 'add' ? 'POST' : 'PUT';
 

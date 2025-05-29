@@ -23,7 +23,7 @@ const SucursalesPage = ({ onLogout }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('http://localhost:4000/api/branch', {
+      const response = await fetch('https://practica-clase.onrender.com/api/branch', {
         method: 'GET',
         credentials: 'include',
       });
@@ -76,7 +76,7 @@ const SucursalesPage = ({ onLogout }) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:4000/api/branch/${sucursalId}`, {
+      const response = await fetch(`https://practica-clase.onrender.com/api/branch/${sucursalId}`, {
         method: 'DELETE',
         credentials: 'include',
       });
@@ -100,8 +100,8 @@ const SucursalesPage = ({ onLogout }) => {
   const handleSaveSucursal = async (formData) => {
     try {
       const url = modalMode === 'add' 
-        ? 'http://localhost:4000/api/branch' 
-        : `http://localhost:4000/api/branch/${currentSucursal._id}`;
+        ? 'https://practica-clase.onrender.com/api/branch' 
+        : `https://practica-clase.onrender.com/api/branch/${currentSucursal._id}`;
       
       const method = modalMode === 'add' ? 'POST' : 'PUT';
 

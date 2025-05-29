@@ -21,7 +21,7 @@ import cors from "cors"
  
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "practica-clase-ten.vercel.app",
     // Permitir envío de cookies y credenciales
     credentials: true
   })

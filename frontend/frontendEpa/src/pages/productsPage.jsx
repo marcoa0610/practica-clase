@@ -11,7 +11,7 @@ const ProductosPage = ({ onLogout }) => {
 
   const fetchProductos = async () => {
     try {
-      const res = await fetch('http://localhost:4000/api/product', {
+      const res = await fetch('https://practica-clase.onrender.com/api/product', {
         credentials: 'include',
       });
       const data = await res.json();
@@ -40,7 +40,7 @@ const ProductosPage = ({ onLogout }) => {
   const handleDelete = async (id) => {
     if (window.confirm('¿Estás seguro de eliminar este producto?')) {
       try {
-        await fetch(`http://localhost:4000/api/product/${id}`, {
+        await fetch(`https://practica-clase.onrender.com/api/product/${id}`, {
           method: 'DELETE',
           credentials: 'include',
         });
@@ -53,8 +53,8 @@ const ProductosPage = ({ onLogout }) => {
 
   const handleSave = async (data) => {
     const url = modalMode === 'edit' 
-      ? `http://localhost:4000/api/product/${selectedProducto._id}`
-      : 'http://localhost:4000/api/product';
+      ? `https://practica-clase.onrender.com/api/product/${selectedProducto._id}`
+      : 'https://practica-clase.onrender.com/api/product';
     const method = modalMode === 'edit' ? 'PUT' : 'POST';
 
     const res = await fetch(url, {
