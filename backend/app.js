@@ -21,7 +21,7 @@ import cors from "cors"
  
 app.use(
   cors({
-    origin: "practica-clase-ten.vercel.app",
+    origin: "https://practica-clase-ten.vercel.app",
     // Permitir envío de cookies y credenciales
     credentials: true
   })
