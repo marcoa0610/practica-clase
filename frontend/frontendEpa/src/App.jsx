@@ -20,7 +20,29 @@ const App = () => {
     checkAuthStatus();
   }, []);
 
-  
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch('https://practica-clase.onrender.com/api/verify-token', {
+        method: 'GET',
+        credentials: 'include', // Para incluir cookies
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setIsAuthenticated(true);
+        setUserType(data.userType);
+      } else {
+        setIsAuthenticated(false);
+        setUserType(null);
+      }
+    } catch (error) {
+      console.error('Error verificando autenticación:', error);
+      setIsAuthenticated(false);
+      setUserType(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLoginSuccess = (data) => {
     setIsAuthenticated(true);
