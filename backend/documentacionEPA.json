@@ -1,0 +1,250 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Documentación para API de ferreteria EPA",
+    "description": "¡Hola! Esta es mi API para ferreteria EPA",
+    "contact": {
+      "email": "you@your-company.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/ricaldone-e96/FerreteriaEPAMERN/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "paths": {
+    "/api/products": {
+      "get": {
+        "tags": [],
+        "summary": "Select Products",
+        "description": "Al utilizar este método devuelve todos los datos de la colecciín productos",
+        "operationId": "get-api-products",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Update a product",
+        "description": "Al utilizar este método actualizamos un producto",
+        "operationId": "put-api-products",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/api_products_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Insert a product",
+        "description": "Al utilizar este método agregamos un producto nuevo",
+        "operationId": "post-api-products",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/api_products_body_1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Delete a product",
+        "description": "utilizando este método se elimina un producto",
+        "operationId": "delete-api-products",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "InventoryItem": {
+        "required": [
+          "id",
+          "manufacturer",
+          "name",
+          "releaseDate"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "name": {
+            "type": "string",
+            "example": "Widget Adapter"
+          },
+          "releaseDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2016-08-29T09:12:33.001Z"
+          },
+          "manufacturer": {
+            "$ref": "#/components/schemas/Manufacturer"
+          }
+        }
+      },
+      "Manufacturer": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "ACME Corporation"
+          },
+          "homePage": {
+            "type": "string",
+            "format": "url",
+            "example": "https://www.acme-corp.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "408-867-5309"
+          }
+        }
+      },
+      "api_products_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "2ahwc1kktw7n8"
+            }
+          },
+          "description": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "zfygzaoscwdec"
+            }
+          },
+          "price": {
+            "maximum": 50000,
+            "minimum": 0.01,
+            "type": "number",
+            "x-stoplight": {
+              "id": "xwwehxyke5nd3"
+            }
+          },
+          "stock": {
+            "maximum": 100000,
+            "minimum": 1,
+            "type": "number",
+            "x-stoplight": {
+              "id": "ufcmhkkk8uh55"
+            }
+          },
+          "": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "7nfmin70pgruk"
+            }
+          }
+        }
+      },
+      "api_products_body_1": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "9ki6rjkiuqs9l"
+            }
+          },
+          "description": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "jegpmb08qnsoq"
+            }
+          },
+          "price": {
+            "maximum": 5000,
+            "minimum": 0.01,
+            "type": "number",
+            "x-stoplight": {
+              "id": "jyh1h8u30cevz"
+            }
+          },
+          "stock": {
+            "maximum": 10000,
+            "minimum": 1,
+            "type": "number",
+            "x-stoplight": {
+              "id": "cywdm059zw7s8"
+            }
+          }
+        }
+      }
+    }
+  }
+}

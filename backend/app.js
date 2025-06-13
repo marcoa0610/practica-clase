@@ -15,10 +15,16 @@ import providersRoutes from "./src/routes/providers.js"
 import brandsRoutes from "./src/routes/brands.js"
 import faqsRoutes from "./src/routes/faqs.js"
 
+
 //Creo una const que es igual a la libreria "express"
 //acabo de importar y lo ejecuto
 const app = express();
+import swaggerUi from "swagger-ui-express";
 import cors from "cors"
+import fs from "fs";
+import path from "path"
+
+
  
 app.use(
   cors({
@@ -32,6 +38,12 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+
+const swaggerDocument = JSON.parse(
+fs.readFileSync(path.resolve("./documentacionEPAv3.json"), "utf-8")
+);
+
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Rutas de la API
 app.use("/api/product", productsRoutes);
 app.use("/api/branch", branchesRoutes); // Cambiado de /api/sucursales a /api/branch para consistencia
