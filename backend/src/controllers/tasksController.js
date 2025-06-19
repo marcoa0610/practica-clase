@@ -2,7 +2,7 @@
 //(Metodos de C R U D)
 
 const tasksController = {};
-import tasks from "../models/tasks.js";
+import tasksModel from "../models/tasks.js";
 
 // SELECT ALL
 tasksController.gettasks = async (req, res) => {
