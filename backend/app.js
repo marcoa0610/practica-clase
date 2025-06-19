@@ -59,7 +59,7 @@ app.use("/api/RecoveryPassword", recoveryPasswordRoutes);
 app.use("/api/providers", providersRoutes);
 app.use("/api/brands", brandsRoutes);
 app.use("/api/faqs", faqsRoutes);
-app.use("api/tasks", tasks)
+app.use("/api/tasks", tasks)
 
 //Exporto toda la constante para poder usar express en otros archivos
 export default app;
